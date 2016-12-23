@@ -4,3 +4,5 @@ from django.views.generic import ListView
 
 class LinkListView(ListView):
     model = link
+    queryset = link.with_votes.all()
+    paginate_by = 3
