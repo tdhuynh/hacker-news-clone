@@ -15,7 +15,9 @@ Including another URLconf
 """
 from django.conf.urls import url
 from django.contrib import admin
+from links.models import Link, View
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
+    url(r'^$', LinkListView.as_view(), name="link-list-view"),
 ]
