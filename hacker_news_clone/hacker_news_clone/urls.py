@@ -15,7 +15,7 @@ Including another URLconf
 """
 from django.conf.urls import url, include
 from django.contrib import admin
-from links.views import LinkListView
+from links.views import LinkListView, UserProfileDetailView
 
 
 urlpatterns = [
@@ -23,4 +23,5 @@ urlpatterns = [
     url(r'^$', LinkListView.as_view(), name="link-list-view"),
     url(r'^', include('django.contrib.auth.urls')),
     url(r'^accounts/', include('registration.backends.simple.urls')),
+    url(r'^users(?P<slug>\w+)/$', UserProfileDetailView.as_view(), name="user_profile_detail_view"),
 ]
