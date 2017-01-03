@@ -1,6 +1,7 @@
 from django.db import models
 from django.db.models import Count
-
+from django.dispatch import receiver
+from django.db.models.signals import post_save
 
 class LinkVoteCountManager(models.Manager):
     def get_query_set(self):
@@ -27,3 +28,20 @@ class Vote(models.Model):
 
     def __unicode__(self):
         return "%s voted %s" % (self.voter.username, self.link.title)
+
+
+class UserProfile(models.Model):
+    user = models.OneToOneField('auth.User', unique=True)
+    bio = models.TextField(null=True)
+
+    def __unicode__(self):
+        return "%s's profile" % self.user
+
+@receiver(post_save, sender='auth.User')
+def create_user_profile(**kwargs):
+    created = kwargs.get('created')
+    instance = kwargs.get('instance')
+    if created:
+        Profile.objects.create(user=instance)
+
+    

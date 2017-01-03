@@ -13,7 +13,7 @@ Including another URLconf
     1. Import the include() function: from django.conf.urls import url, include
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
-from django.conf.urls import url
+from django.conf.urls import url, include
 from django.contrib import admin
 from links.views import LinkListView
 
@@ -21,4 +21,6 @@ from links.views import LinkListView
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^$', LinkListView.as_view(), name="link-list-view"),
+    url(r'^', include('django.contrib.auth.urls')),
+    url(r'^accounts/', include('registration.backends.simple.urls')),
 ]
